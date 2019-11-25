@@ -1,0 +1,47 @@
+
+# Course TLO-32426 Basics for Business Data Analytics
+# Assignment for week 47 Data analysis with R
+
+# Installing readxl package
+#install.packages('readxl')
+
+# Opening the data file 'student performance data.xlsx'
+# and importing it to R as dataframe 'dat'
+
+library(readxl)
+dat <- read_excel('C:/Users/Nico/Documents/tty/ohsiha/test_r/student performance data.xlsx')
+
+# Printing result
+View(dat)
+
+# Selecting given independent variables
+dataset <- dat[, c('age', 'traveltime', 'studytime', 'failures', 'G3')]
+
+# Test print to see the results
+head(dataset)
+
+# Creating linear regression model
+model <- lm(G3 ~ age + traveltime + studytime + failures, data = dataset)
+model
+
+summary(model)
+
+# Using predict function to return the predicted values from the model
+dataset$predictvalue <- predict(model)
+
+# Introducing three new students
+newstudents <- data.frame(
+    age = c(20, 16, 9),
+    traveltime = c(4, 1, 3),
+    studytime = c(4, 4, 2),
+    failures = c(0, 3, 4)
+)
+
+# Predicting the grades of three new students
+grades <- c(predict(model, newdata = newstudents))
+
+# Adding the predictions to the dataframe
+newstudents$G3 <- c(round(grades))
+
+# Printing results
+View(newstudents)
