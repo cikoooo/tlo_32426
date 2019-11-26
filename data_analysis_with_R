@@ -41,7 +41,11 @@ newstudents <- data.frame(
 grades <- c(predict(model, newdata = newstudents))
 
 # Adding the predictions to the dataframe
-newstudents$G3 <- c(round(grades))
+newstudents$'final grade (G3)' <- c(round(grades))
+
+# Adding index to the dataframe and changing ID to first column
+newstudents$ID <- c(1, 2, 3)
+newstudents <- newstudents[c(6, 1, 2, 3, 4, 5)]
 
 # Printing results
 View(newstudents)
