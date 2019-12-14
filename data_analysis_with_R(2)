@@ -1,0 +1,48 @@
+# Course TLO-32426 Basics for Business Data Analytics
+# Assignment for week 48 Data analysis with R (2)
+
+#Installing necessary packages for corrplot - function
+# install.packages('readxl')
+# install.packages('corrplot')
+# install.packages('RColorBrewer')
+# install.packages('Hmisc')
+# install.packages('PerformanceAnalytics')
+# install.packages('ggplot2')
+
+#Activating packages
+library(readxl)
+library(corrplot)
+library(RColorBrewer)
+library(Hmisc)
+library(PerformanceAnalytics)
+require(ggplot2)
+
+# Opening the data file 'student performance data.xlsx'
+# and importing it to R as dataframe 'dat'
+
+dat <- read_excel('C:/Users/Nico/Documents/tty/ohsiha/test_r/student performance data.xlsx')
+
+# Selecting specified variables
+dat2 <- dat[, c('G3', 'age', 'traveltime', 'studytime', 'failures')]
+
+# Test print to see the results
+head(dat2)
+
+# Making correlation plot of variables from dat2
+data <- cor(dat2)
+corrplot(data, type='upper', title = 'Correlation plot',
+                tl.col='black', tl.srt = 45, mar = c(0,4,1,0))
+
+# Saving the plot to a pdf-file
+pdf('figure 1.pdf', width=8, height=8)
+corrplot(data, type='upper', title = 'Correlation plot',
+                tl.col='black', tl.srt = 45, mar = c(0,4,1,0))
+dev.off()
+
+# Utilizing 'ggplot' to create a plot of age and final grade (G3)
+# and saving it to pdf-file
+ggplot (dat2, aes(x = age, y = G3)) + geom_point(color = 'red')
+
+ggsave('figure 2.pdf', width = 8 , height = 8)
+ggplot (dat2, aes(x = age, y = G3)) + geom_point(color = 'red')
+dev.off()
